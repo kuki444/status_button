@@ -11,6 +11,11 @@ function make_status(newStatus) {
 			return;
 		}
 		s.val(newStatus);
+		$("#send_notification").attr('checked', false);
+		// FIXME: add option - not hardcoded
+		if ( newStatus == 3 ) {
+			$("#issue_done_ratio option[value=100]").attr('selected', true)
+		}
 		f.submit();
 	} else {
 		// redmine uses prototype so use it.
