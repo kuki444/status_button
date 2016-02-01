@@ -13,7 +13,7 @@ function make_status(newStatus, userId) {
 		s.val(newStatus);
 		$("#send_notification").attr('checked', false);
 		// FIXME: add option - not hardcoded
-		if ( newStatus == 3 ) {
+		if ( newStatus == 3 || newStatus == 9 ) {
 			$("#issue_done_ratio option[value=100]").attr('selected', true)
 		} else if ( newStatus == 2 && userId ) {
 			$("#issue_assigned_to_id option[value=" + userId + "]").attr('selected', true);
