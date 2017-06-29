@@ -1,7 +1,9 @@
 <%
 	if StatusButton::Hooks.is_open?(@project)
 %>
-<tr><th class="status"><%= l(:field_status) + "-->" %></th><td class="status" colspan=3><%
+<tr><th class="status">
+</th>
+<td class="status" colspan=3><%
 # Returns an array of statuses that user is able to apply
 def all_new_statuses_allowed_to(issue)
 	user = User.current
@@ -26,16 +28,25 @@ def all_new_statuses_allowed_to(issue)
 end
 plugin = Redmine::Plugin.find(:status_button)
 setting = Setting["plugin_#{plugin.id}"] || plugin.settings[:default]
-allowed_statuses = setting[:check_all_status] ? all_new_statuses_allowed_to(@issue) : @issue.new_statuses_allowed_to()
-for status in @issue.tracker.issue_statuses
+allowed_statuses = setting[:check_all_status] ? all_new_statuses_allowed_to(@issue) : @issue.new_statuses_allowed_to()%>
+
+<div class="status__box__wrapper">
+<% for status in @issue.tracker.issue_statuses
 	if @issue.status == status
-		%><b>[<%= status.name %>]</b>&emsp;<%
+		%>
+
+		<a class="status__box status__box--active">
+			<%= status.name %>
+		</a>
+
+		<%
 	else
-		%>[<%= link_to_if allowed_statuses.include?(status),
-						status.name, "javascript:make_status(#{status.id}, #{User.current.id})" %>]&emsp;<%
+		%>
+			<%= link_to status.name, "javascript:make_status(#{status.id}, #{User.current.id})", :class => 'status__box' if allowed_statuses.include?(status) %>
+		<%
 	end
 end
-%></td></tr>
+%></div></td></tr>
 <%= javascript_include_tag "status_button.js", :plugin => 'status_button' %>
 <%
 	end
