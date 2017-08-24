@@ -42,7 +42,7 @@ allowed_statuses = setting[:check_all_status] ? all_new_statuses_allowed_to(@iss
 		<%
 	else
 		%>
-			<%= link_to status.name, "javascript:make_status(#{status.id}, #{User.current.id})", :class => 'btn btn-xs' if allowed_statuses.include?(status) %>
+			<%= link_to status.name, "javascript:make_status(#{status.id}, #{User.current.id})", :class => 'btn btn-primary btn-xs' if allowed_statuses.include?(status) %>
 		<%
 	end
 end
